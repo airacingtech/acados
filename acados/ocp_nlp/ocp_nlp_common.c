@@ -2996,7 +2996,9 @@ void ocp_nlp_approximate_qp_matrices(ocp_nlp_config *config, ocp_nlp_dims *dims,
 
     /* stage-wise multiple shooting lagrangian evaluation */
 #if defined(ACADOS_WITH_OPENMP)
-    #pragma omp parallel for
+    /* round-robin stages: per-stage cost is uneven under non-uniform
+       discretization, so the default block schedule imbalances threads */
+    #pragma omp parallel for schedule(static, 1)
 #endif
     for (int i = 0; i <= N; i++)
     {
