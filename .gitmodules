@@ -18,8 +18,8 @@
 # 	ignore = dirty
 [submodule "hpipm"]
 	path = external/hpipm
-	url = https://github.com/giaf/hpipm.git
-	branch = stable
+	url = https://github.com/airacingtech/hpipm.git
+	branch = art-jazzy
 [submodule "qpoases"]
 	path = external/qpoases
 	url = https://github.com/acados/qpOASES.git
