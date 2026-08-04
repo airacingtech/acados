@@ -682,13 +682,17 @@ void ocp_nlp_out_set(ocp_nlp_config *config, ocp_nlp_dims *dims, ocp_nlp_out *ou
 void ocp_nlp_out_set_values_to_zero(ocp_nlp_config *config, ocp_nlp_dims *dims, ocp_nlp_out *out)
 {
     int N = dims->N;
-    for (int i = 0; i<=N; i++)
+    for (int i = 0; i<N; i++)
     {
         blasfeo_dvecse(dims->nv[i], 0.0, &out->ux[i], 0);
         blasfeo_dvecse(dims->nz[i], 0.0, &out->z[i], 0);
         blasfeo_dvecse(dims->nx[i+1], 0.0, &out->pi[i], 0);
         blasfeo_dvecse(2*dims->ni[i], 0.0, &out->lam[i], 0);
     }
+    // pi is allocated for stages 0..N-1 only, see ocp_nlp_out_assign
+    blasfeo_dvecse(dims->nv[N], 0.0, &out->ux[N], 0);
+    blasfeo_dvecse(dims->nz[N], 0.0, &out->z[N], 0);
+    blasfeo_dvecse(2*dims->ni[N], 0.0, &out->lam[N], 0);
 }
 
 
